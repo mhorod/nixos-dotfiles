@@ -1,10 +1,10 @@
 
 install:
-	sudo cp -r programs /etc/nixos/programs
-	sudo cp *.nix /etc/nixos/
+  sudo cp *.nix /etc/nixos/
+  cp -r .config ~/.config
 
 test: install
-	sudo nixos-rebuild test
+  sudo nixos-rebuild test
 
 switch: install
-	sudo nixos-rebuild switch
+  sudo nixos-rebuild switch

@@ -1,0 +1,27 @@
+* {
+	font-size: 14px;
+}
+
+window#waybar{
+    all:unset;
+    background: alpha(#222, .7);
+}
+
+.modules-right {
+    margin: 5px 10px;
+}
+
+#workspaces button {
+    all:unset;
+    padding: 5px 10px;
+    color: #fff;
+}
+
+
+#workspaces button.active {
+    color: #b8bb26;
+} 
+
+#workspaces button:hover {
+	background: alpha(#333, .3);
+} 
