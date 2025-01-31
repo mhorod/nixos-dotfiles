@@ -35,7 +35,15 @@ in {
       clipboard = "unnamedplus";
     };
 
+    highlightOverride = {
+      Normal.bg = "NONE";
+    };
+
     plugins = {
+      treesitter = {
+        enable = true;
+        settings.highlight.enable = true;
+      };
       conform-nvim = {
         enable = true;
         settings = {

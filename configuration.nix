@@ -36,10 +36,12 @@
   programs.firefox.enable = true;
   programs.hyprland.enable = true;
   programs.java.enable = true;
+  programs.fish.enable = true;
 
   environment.systemPackages = with pkgs; [
     alacritty
     btop
+    eza
     feh
     git
     hyprpaper
@@ -60,6 +62,8 @@
     wl-clipboard-x11
 
     # programming languages
+    tree-sitter
+    nodejs_23
     deno
     jdk17
     python314
@@ -121,6 +125,7 @@
 
   users.users.mhorod = {
     isNormalUser = true;
+    shell = pkgs.fish;
     extraGroups = ["wheel"];
     packages = with pkgs; [
       tree

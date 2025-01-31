@@ -1,7 +1,8 @@
+config:
+  cp -r .config/* ~/.config/
 
-install:
+install: config
   sudo cp *.nix /etc/nixos/
-  cp -r .config ~/.config
 
 test: install
   sudo nixos-rebuild test
