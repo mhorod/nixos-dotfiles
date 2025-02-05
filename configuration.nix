@@ -11,6 +11,7 @@
     ./hardware-configuration.nix
     ./locale.nix
     ./nixvim.nix
+    ./zerotier.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -30,6 +31,8 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
+  hardware.i2c.enable = true;
+
   services.xserver.videoDrivers = ["nvidia"];
 
   # programs
@@ -39,13 +42,13 @@
   programs.fish.enable = true;
 
   environment.systemPackages = with pkgs; [
+    ddcutil
     alacritty
     btop
     eza
     feh
     git
-    hyprpaper
-    hyprshot
+    graphviz
     fastfetch
     discord
     kitty
@@ -54,14 +57,19 @@
     waybar
     wget
 
+    # hyprland
+    hyprpaper
+    hyprshot
+    hyprcursor
+
     # editors
-    neovim
     vim
     vscode
     jetbrains.idea-ultimate
     wl-clipboard-x11
 
     # programming languages
+    rustup
     tree-sitter
     nodejs_23
     deno
@@ -143,6 +151,7 @@
     _GLX_VENDOR_LIBRARY_NAME = "nvidia";
     GBM_BACKEND = "nvidia-drm";
     WLR_NO_HARDWARE_CURSORS = "1";
+    JAVA_17_HOME = "${pkgs.jdk17}/lib/openjdk";
   };
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -159,8 +168,8 @@
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [3000 9993];
+  networking.firewall.allowedUDPPorts = [9993];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 

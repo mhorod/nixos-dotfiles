@@ -40,15 +40,25 @@ in {
     };
 
     plugins = {
+      web-devicons.enable = true;
+      neo-tree.enable = true;
+      rustaceanvim.enable = true;
+      coq-nvim = {
+        enable = true;
+        settings.auto_start = true;
+      };
+
       treesitter = {
         enable = true;
         settings.highlight.enable = true;
       };
+
       conform-nvim = {
         enable = true;
         settings = {
           formatters_by_ft = {
             nix = ["alejandra"];
+            rust = ["rustfmt"];
           };
         };
       };
@@ -63,6 +73,11 @@ in {
           silent = true;
           noremap = true;
         };
+      }
+      {
+        mode = "n";
+        key = "<C-n>";
+        action = "<cmd>Neotree toggle left<CR>";
       }
     ];
   };

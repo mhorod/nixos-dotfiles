@@ -12,3 +12,5 @@ alias cp="cp -v"
 alias rm="rm -v"
 alias ls="exa -al --color=always --group-directories-first"
 
+alias get-brighthness="sudo ddcutil -d 1 getvcp 10"
+alias set-brighthness="sudo ddcutil -d 1 setvcp 10"
