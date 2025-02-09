@@ -11,30 +11,22 @@
     ./hardware-configuration.nix
     ./locale.nix
     ./nixvim.nix
-    ./zerotier.nix
   ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.grub = {
+    enable = true;
+    efiSupport = true;
+    useOSProber = true;
+    device = "nodev";
+  };
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # networking.hostName = "nixos"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  hardware.bluetooth.enable = true;
+
+  networking.networkmanager.enable = true; 
+
 
   nixpkgs.config.allowUnfree = true;
-  hardware.nvidia = {
-    modesetting.enable = true;
-    open = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-
-  hardware.i2c.enable = true;
-
-  services.xserver.videoDrivers = ["nvidia"];
-
   # programs
   programs.firefox.enable = true;
   programs.hyprland.enable = true;
@@ -42,16 +34,19 @@
   programs.fish.enable = true;
 
   environment.systemPackages = with pkgs; [
+    killall
     ddcutil
     alacritty
     btop
     eza
     feh
     git
+    just
     graphviz
     fastfetch
     discord
     kitty
+    brightnessctl
     pavucontrol
     rofi
     waybar
@@ -60,7 +55,11 @@
     # hyprland
     hyprpaper
     hyprshot
+    hyprlock
     hyprcursor
+    pywal
+    wpaperd
+
 
     # editors
     vim
@@ -69,6 +68,7 @@
     wl-clipboard-x11
 
     # programming languages
+    jq
     rustup
     tree-sitter
     nodejs_23
@@ -98,9 +98,13 @@
 
   fonts.packages = with pkgs; [
     noto-fonts
+    noto-fonts-extra
     noto-fonts-emoji
     liberation_ttf
     fira-code
+    powerline-fonts
+    powerline-symbols
+    font-awesome
     fira-code-symbols
     mplus-outline-fonts.githubRelease
     dina-font
@@ -108,7 +112,19 @@
     nerdfonts
   ];
 
-  fonts.fontconfig.defaultFonts.emoji = ["Noto Color Emoji"];
+  fonts = {
+    enableDefaultPackages = true;
+    fontDir.enable = true;
+    fontconfig = {
+      enable = true;
+      useEmbeddedBitmaps = true;
+      defaultFonts = {
+        serif = ["Noto Serif"];
+        sansSerif = ["Noto Sans"];
+        emoji = ["Noto Color Emoji"];
+      };
+    };
+  };
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
@@ -119,14 +135,6 @@
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
-
-  # Enable sound.
-  # hardware.pulseaudio.enable = true;
-  # OR
-  # services.pipewire = {
-  #   enable = true;
-  #   pulse.enable = true;
-  # };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
@@ -148,8 +156,6 @@
   };
 
   environment.variables = {
-    _GLX_VENDOR_LIBRARY_NAME = "nvidia";
-    GBM_BACKEND = "nvidia-drm";
     WLR_NO_HARDWARE_CURSORS = "1";
     JAVA_17_HOME = "${pkgs.jdk17}/lib/openjdk";
   };

@@ -59,6 +59,7 @@ in {
           formatters_by_ft = {
             nix = ["alejandra"];
             rust = ["rustfmt"];
+            json = ["jq"];
           };
         };
       };

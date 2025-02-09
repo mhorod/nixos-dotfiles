@@ -1,27 +1,117 @@
+@define-color background rgb(14, 26, 41);
+@define-color foreground rgb(233, 195, 197);
+@define-color green #86d37a;
+@define-color yellow #ffd885;
+@define-color red #f3566e;
+
 * {
 	font-size: 14px;
+  border-radius: 0;
+  border: none;
+  min-height: 20px;
+  font-family: Fira Code;
 }
 
 window#waybar{
-    all:unset;
-    background: alpha(#222, .7);
+    background: transparent;
+}
+
+.modules-left {
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+.modules-center {
+  margin-top: 5px;
 }
 
 .modules-right {
-    margin: 5px 10px;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+#workspaces {
+  margin-right: 8px;
+  border-radius: 10px;
+  transition: none;
+  background: @background;
 }
 
 #workspaces button {
-    all:unset;
     padding: 5px 10px;
-    color: #fff;
+    border: none;
+    color: @foreground;
 }
 
 
 #workspaces button.active {
-    color: #b8bb26;
+    color: @green;
 } 
 
 #workspaces button:hover {
-	background: alpha(#333, .3);
+	background: alpha(@background, .3);
 } 
+
+#clock {
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 10px;
+  transition: none;
+  color: @foreground;
+  background: @background;
+}
+
+#pulseaudio {
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-right: 8px;
+  border-radius: 10px;
+  color: @foreground;
+  background: @background;
+}
+
+#backlight {
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-right: 8px;
+  border-radius: 10px;
+  color: @foreground;
+  background: @background;
+}
+
+#battery {
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-right: 8px;
+  border-radius: 10px;
+  color: @foreground;
+  background: @background;
+}
+
+#battery.charging, #battery.good {
+  color: @green;
+  background: @background;
+}
+
+#battery.warning:not(.charging) {
+  color: @yellow;
+  background: @background;
+}
+
+#battery.critical:not(.charging) {
+  color: @red;
+  background: @background;
+}
+
+#network {
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 10px;
+  color: @green;
+  background: @background;
+}
+
+#network.disconnected {
+  color: @red;
+  background: @background;
+}
