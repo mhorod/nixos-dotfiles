@@ -23,8 +23,7 @@
 
   hardware.bluetooth.enable = true;
 
-  networking.networkmanager.enable = true; 
-
+  networking.networkmanager.enable = true;
 
   nixpkgs.config.allowUnfree = true;
   # programs
@@ -34,6 +33,7 @@
   programs.fish.enable = true;
 
   environment.systemPackages = with pkgs; [
+    acpi
     killall
     ddcutil
     alacritty
@@ -60,7 +60,6 @@
     pywal
     wpaperd
 
-
     # editors
     vim
     vscode
@@ -79,6 +78,7 @@
     nasm
     stack
     kotlin
+    sbt
   ];
 
   # Configure network proxy if necessary
