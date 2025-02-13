@@ -30,9 +30,8 @@
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
-
   hardware.i2c.enable = true;
-
+  hardware.graphics.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
 
   # programs
@@ -40,6 +39,7 @@
   programs.hyprland.enable = true;
   programs.java.enable = true;
   programs.fish.enable = true;
+  programs.nix-ld.enable = true;
 
   environment.systemPackages = with pkgs; [
     ddcutil
@@ -61,6 +61,15 @@
     hyprpaper
     hyprshot
     hyprcursor
+
+    # opengl
+    libGL
+    mesa
+    mesa.drivers
+    vulkan-loader
+    libglvnd
+    steam-run
+    freeglut
 
     # editors
     vim
@@ -98,9 +107,13 @@
 
   fonts.packages = with pkgs; [
     noto-fonts
+    noto-fonts-extra
     noto-fonts-emoji
     liberation_ttf
     fira-code
+    powerline-fonts
+    powerline-symbols
+    font-awesome
     fira-code-symbols
     mplus-outline-fonts.githubRelease
     dina-font
@@ -108,7 +121,19 @@
     nerdfonts
   ];
 
-  fonts.fontconfig.defaultFonts.emoji = ["Noto Color Emoji"];
+  fonts = {
+    enableDefaultPackages = true;
+    fontDir.enable = true;
+    fontconfig = {
+      enable = true;
+      useEmbeddedBitmaps = true;
+      defaultFonts = {
+        serif = ["Noto Serif"];
+        sansSerif = ["Noto Sans"];
+        emoji = ["Noto Color Emoji"];
+      };
+    };
+  };
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
